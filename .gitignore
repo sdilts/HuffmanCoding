@@ -9,7 +9,11 @@
 
 # Backup files #
 ################
-*.java~
+*.javan~
 *.java#
+*.gradle~
 
+# Direct files and directories #
+################################
+.gradle
 build/
