@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-26 20:25:54 stuart>
+ * Time-stamp: <2016-01-26 23:41:48 stuart>
  * */
 
 package HuffmanCode;
@@ -11,6 +11,9 @@ package HuffmanCode;
 import java.util.Scanner;
 
 public class Main {
+
+    private static HuffmanCode file;
+
     /**
      * @param args the command line arguments
      */
@@ -22,7 +25,7 @@ public class Main {
 		switch(s.nextLine()) {
 		case "e":
 		    System.out.println("Enter stuff now");
-		    System.out.println(enterMessage("[$]"));
+		    file = new HuffmanCode(enterMessage("[$]"));
 		    break;
 		case "s":
 		    System.out.println("Show stuff");
@@ -34,13 +37,15 @@ public class Main {
 		    System.out.println("Decode Stuff");
 		    break;
 		case "exit":
+		    System.out.println("Exiting...");
 		    System.exit(0);
 		default:
 		    System.out.println("Input error:\nPlease enter either 'e', 's', 'c', or *'d'");
 		    break;
 		}
-	    } catch(Exception e) {
+	    } catch(java.util.NoSuchElementException e) {
 		e.printStackTrace();
+		System.exit(1);
 	    }
 	}
     }

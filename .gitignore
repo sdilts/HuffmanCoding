@@ -9,7 +9,7 @@
 
 # Backup files #
 ################
-*.javan~
+*.java~
 *.java#
 *.gradle~
 
