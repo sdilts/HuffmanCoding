@@ -3,26 +3,26 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-26 23:37:26 stuart>
+ * Time-stamp: <2016-01-27 16:08:41 stuart>
  * */
 
 package HuffmanCode;
+import java.util.PriorityQueue;
 
 public class HuffmanCode {
 
     private String message;
     private int[] freqTable;
-    //private Tree t;
+    private Tree t;
 
     public HuffmanCode() throws Exception {
 	System.out.println("This behavior is undefined with this constructor");
 	System.exit(1);
-
     }
 
     public HuffmanCode(String message) {
 	this.message = formatInput(message);
-	System.out.println(this.message);
+	//System.out.println(this.message);
 	buildFreqTable();
 	buildHuffmanTree();
     }
@@ -48,17 +48,40 @@ public class HuffmanCode {
 	    int index = toIndex(message.charAt(i));
 	    freqTable[index]++;
 	}
-	for(int i = 0; i < freqTable.length; i++) {
-	    System.out.printf("%s = %s\n", fromIndex(i), freqTable[i]);
+	// for(int i = 0; i < freqTable.length; i++) {
+	//     System.out.printf("%s = %s\n", fromIndex(i), freqTable[i]);
 
-	}
+	// }
     }
 
     private void buildHuffmanTree() {
+	PriorityQueue<Node> q = new PriorityQueue<Node>();
+	for(int i = 0; i < freqTable.length; i++) {
+	    if(freqTable[i] != 0) {
+		q.add(new Node<Character>(freqTable[i], fromIndex(i)));
+	    }
+	}
+	//Node<Integer> tree = q.pull();
+	while(q.size() > 1) {
+	    Node<Character> left = q.poll();
+	    Node<Character> right = q.poll();
+	    Node parent = new Node<Character>(left.key + right.key,
+					    null);
+	    parent.leftChild = right;
+	    parent.rightChild = left;
+	    q.add(parent);
 
-
+	}
+	t = new Tree(q.poll());
+	t.displayTree();
+	
     }
 
-
-
+    public void displayTree() {
+	if(t == null) {
+	    System.out.println("You need to enter a message first");
+	} else {
+	    t.displayTree();
+	}
+    }
 }

@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-26 23:41:48 stuart>
+ * Time-stamp: <2016-01-27 16:02:23 stuart>
  * */
 
 package HuffmanCode;
@@ -24,11 +24,12 @@ public class Main {
 	    try {
 		switch(s.nextLine()) {
 		case "e":
-		    System.out.println("Enter stuff now");
+		    System.out.println("Enter text lines, terminate with $");
 		    file = new HuffmanCode(enterMessage("[$]"));
 		    break;
 		case "s":
-		    System.out.println("Show stuff");
+		    file.displayTree();
+		    System.out.println("\n\n\n");
 		    break;
 		case "c":
 		    System.out.println("Code stuff");
@@ -38,6 +39,7 @@ public class Main {
 		    break;
 		case "exit":
 		    System.out.println("Exiting...");
+		    s.close();
 		    System.exit(0);
 		default:
 		    System.out.println("Input error:\nPlease enter either 'e', 's', 'c', or *'d'");
