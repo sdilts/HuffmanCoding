@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 22:15:12 stuart>
+ * Time-stamp: <2016-01-27 22:41:48 stuart>
  * */
 
 package HuffmanCode;
@@ -90,20 +90,22 @@ public class HuffmanCode {
 
     private void buildCodeTableHelper(Node current, StringBuilder
 				      code) {
-	//assume that the tree is built correctly:
-	if(current.isLeaf()) {
-	    if(code.length() > 0) {
-		codeTable[toIndex((char)current.data)] = code.toString();
-	    } else { //only one entry in the tree:
-		codeTable[toIndex((char)current.data)] = "0";
+	//account for special case where only one char is represented:
+	if(current != null) {
+	    if(current.isLeaf()) {
+		if(code.length() > 0) {
+		    codeTable[toIndex((char)current.data)] = code.toString();
+		} else { //only one entry in the tree:
+		    codeTable[toIndex((char)current.data)] = "0";
+		}
+	    } else { //not a leaf; continue:
+		code.append('0');
+		buildCodeTableHelper(current.rightChild, code);
+		code.deleteCharAt(code.length()-1);
+		code.append('1');
+		buildCodeTableHelper(current.leftChild, code);
+		code.deleteCharAt(code.length()-1);
 	    }
-	} else { //not a leaf; continue:
-	    code.append('0');
-	    buildCodeTableHelper(current.rightChild, code);
-	    code.deleteCharAt(code.length()-1);
-	    code.append('1');
-	    buildCodeTableHelper(current.leftChild, code);
-	    code.deleteCharAt(code.length()-1);
 	}
 
     }
@@ -135,19 +137,25 @@ public class HuffmanCode {
 		q.add(new Node<Character>(freqTable[i], fromIndex(i)));
 	    }
 	}
-	//Node<Integer> tree = q.pull();
-	while(q.size() > 1) {
+	if(q.size() == 1) { //special case: only one code:
 	    Node<Character> left = q.poll();
-	    Node<Character> right = q.poll();
-	    Node parent = new Node<Character>(left.key + right.key,
-					    null);
-	    parent.leftChild = left;
-	    parent.rightChild = right;
-	    q.add(parent);
+	    Node parent = new Node(left.key, null);
+	    parent.rightChild = left;
+	    t = new Tree(parent);
+	} else {
+	    while(q.size() > 1) {
+		Node<Character> left = q.poll();
+		Node<Character> right = q.poll();
+		Node parent = new Node<Character>(left.key + right.key,
+						  null);
+		parent.leftChild = left;
+		parent.rightChild = right;
+		q.add(parent);
 
+	    }
+	    t = new Tree(q.poll());
+	    //t.displayTree();
 	}
-	t = new Tree(q.poll());
-	//t.displayTree();
 	
     }
 
