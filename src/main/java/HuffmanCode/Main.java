@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 18:55:00 stuart>
+ * Time-stamp: <2016-01-27 20:15:34 stuart>
  * */
 
 package HuffmanCode;
@@ -21,19 +21,22 @@ public class Main {
 	Scanner s = new Scanner(System.in);
 	while(true) {
 	    System.out.print("Enter first letter of enter, show, code ,or decode: ");
-	    //try {
+	    try {
 		switch(s.nextLine()) {
 		case "e":
 		    System.out.println("Enter text lines, terminate with $");
 		    file = new HuffmanCode(enterMessage("[$]"));
+		    System.out.println("\n\n\n");
 		    break;
 		case "s":
 		    file.displayTree();
 		    System.out.println("\n\n\n");
 		    break;
 		case "c":
-		    System.out.println("Code stuff");
 		    file.printCodeTable();
+		    System.out.println("\n\nCoded Message:");
+		    System.out.println(file.getEncodedMessage() +
+				       "\n\n\n");
 		    break;
 		case "d":
 		    System.out.println("Decode Stuff");
@@ -43,13 +46,14 @@ public class Main {
 		    s.close();
 		    System.exit(0);
 		default:
-		    System.out.println("Input error:\nPlease enter either 'e', 's', 'c', or *'d'");
+		    System.out.println("Input error: Please enter either 'e', 's', 'c', or 'd'");
 		    break;
 		}
-		// }  catch(java.util.NoSuchElementException e) {
-	    // 	e.printStackTrace();
-	    // 	System.exit(1);
-	    // }
+	    }  catch(java.lang.ArrayIndexOutOfBoundsException e) {
+		System.out.println("Error: please only insert characters a-Z, as well as space and newline.");
+		e.printStackTrace();
+		//System.exit(1);
+	    }
 	}
     }
 

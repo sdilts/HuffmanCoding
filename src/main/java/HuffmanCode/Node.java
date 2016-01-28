@@ -21,6 +21,9 @@ class Node<E extends Comparable> implements Comparable<Comparable> {
 	return leftChild == null && rightChild == null;
     }
 
-    //    public 
+    public String getValue() {
+	String dataString = (data == null) ? "+" : data.toString();
+	return dataString.concat(key.toString());
+    }
 
 }

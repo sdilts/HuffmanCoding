@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 19:14:02 stuart>
+ * Time-stamp: <2016-01-27 20:19:29 stuart>
  * */
 
 package HuffmanCode;
@@ -12,6 +12,7 @@ import java.util.PriorityQueue;
 public class HuffmanCode {
 
     private String message;
+    private String encodedMessage;
     private int[] freqTable;
     private String[] codeTable;
     private Tree t;
@@ -23,12 +24,12 @@ public class HuffmanCode {
 
     public HuffmanCode(String message) {
 	this.message = formatInput(message);
-	//System.out.println(this.message);
-	System.out.println("Building Frequency Table..");
+	System.out.println("Encoding: " + this.message);
+	System.out.println("Building Frequency Table...");
 	buildFreqTable();
 	System.out.println("Building Huffman Tree...");
 	buildHuffmanTree();
-	System.out.println("Code Table...");
+	System.out.println("Building Code Table...");
 	buildCodeTable();
 	System.out.println("Encoding message...");
 	encodeMessage();
@@ -42,6 +43,13 @@ public class HuffmanCode {
 	return input;
     }
 
+    private void encodeMessage() {
+	StringBuilder code = new StringBuilder();
+	for(int i = 0; i < message.length(); i++) {
+	    code.append(codeTable[toIndex(message.charAt(i))]);
+	}
+	encodedMessage = code.toString();
+    }
 
     private void buildCodeTable() {
 	codeTable = new String[28];
@@ -113,11 +121,19 @@ public class HuffmanCode {
 	
     }
 
+    public String getMessage() {
+	return message;
+    }
+
+    public String getEncodedMessage() {
+	return encodedMessage;
+    }
+
     public void displayTree() {
 	if(t == null) {
 	    System.out.println("You need to enter a message first");
 	} else {
-	    t.displayTree();
+	    PrintTree.printTree(t);
 	}
     }
 
