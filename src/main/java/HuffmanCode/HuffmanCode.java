@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 22:41:48 stuart>
+ * Time-stamp: <2016-01-27 23:04:48 stuart>
  * */
 
 package HuffmanCode;
@@ -51,18 +51,11 @@ public class HuffmanCode {
 	encodedMessage = code.toString();
     }
 
-    private void buildCodeTable() {
-	codeTable = new String[28];
-	StringBuilder stackie = new StringBuilder();
-	buildCodeTableHelper(t.root, stackie);
-
-    }
-
     public String decodeMessage(String message) {
 	StringBuilder code = new StringBuilder();
 	Node cur = t.root;
 	for(int i = 0; i < message.length(); i++) {
-	    System.out.println(cur.getValue());
+	    //System.out.println(cur.getValue());
 	    if(message.charAt(i) == '0') {
 		cur = cur.rightChild;
 	    } else if(message.charAt(i) == '1') {
@@ -72,7 +65,7 @@ public class HuffmanCode {
 		System.exit(1);
 	    }
 	    if(cur.isLeaf()) {
-		System.out.println((char) cur.data);
+		//System.out.println((char) cur.data);
 		code.append((char)cur.data);
 		//i--;
 		cur = t.root;
@@ -86,6 +79,11 @@ public class HuffmanCode {
 	return code.toString();
     }
 
+    private void buildCodeTable() {
+	codeTable = new String[28];
+	StringBuilder stackie = new StringBuilder();
+	buildCodeTableHelper(t.root, stackie);
+    }
 
 
     private void buildCodeTableHelper(Node current, StringBuilder
@@ -110,30 +108,18 @@ public class HuffmanCode {
 
     }
 
-    private int toIndex(char c) {
-	return ((int) c) - 65;
-    }
-
-    private char fromIndex(int index) {
-	return ((char) (index + 65));
-    }
-
     private void buildFreqTable() {
 	freqTable = new int[28];
 	for(int i = 0; i < message.length(); i++) {
 	    int index = toIndex(message.charAt(i));
 	    freqTable[index]++;
 	}
-	// for(int i = 0; i < freqTable.length; i++) {
-	//     System.out.printf("%s = %s\n", fromIndex(i), freqTable[i]);
-
-	// }
     }
 
     private void buildHuffmanTree() {
 	PriorityQueue<Node> q = new PriorityQueue<Node>();
 	for(int i = 0; i < freqTable.length; i++) {
-	    if(freqTable[i] != 0) {
+	    if(freqTable[i] != 0) { //exclude chars that aren't in the message
 		q.add(new Node<Character>(freqTable[i], fromIndex(i)));
 	    }
 	}
@@ -159,14 +145,6 @@ public class HuffmanCode {
 	
     }
 
-    public String getMessage() {
-	return message;
-    }
-
-    public String getEncodedMessage() {
-	return encodedMessage;
-    }
-
     public void displayTree() {
 	if(t == null) {
 	    System.out.println("You need to enter a message first");
@@ -183,4 +161,21 @@ public class HuffmanCode {
 	    }
 	}
     }
+
+    private int toIndex(char c) {
+	return ((int) c) - 65;
+    }
+
+    private char fromIndex(int index) {
+	return ((char) (index + 65));
+    }
+
+    public String getMessage() {
+	return message;
+    }
+
+    public String getEncodedMessage() {
+	return encodedMessage;
+    }
+
 }

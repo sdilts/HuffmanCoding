@@ -1,9 +1,9 @@
 /** 
- * Main class for the Huffman coding program. Handles the input and output, as well as 
- * the control flow of the program.
+ * Main class for the Huffman coding program. Handles simple input and output,
+ * as well as the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 21:22:08 stuart>
+ * Time-stamp: <2016-01-27 22:59:16 stuart>
  * */
 
 package HuffmanCode;
@@ -29,18 +29,25 @@ public class Main {
 		    System.out.println("\n\n\n");
 		    break;
 		case "s":
-		    file.displayTree();
-		    System.out.println("\n\n\n");
+		    if(file != null) {
+			file.displayTree();
+			System.out.println("\n\n\n");
+		    } else printNullMessage("veiwing the tree");
 		    break;
 		case "c":
-		    file.printCodeTable();
-		    System.out.println("\n\nCoded Message:");
-		    System.out.println(file.getEncodedMessage() +
-				       "\n\n\n");
+		    if(file != null) {
+			file.printCodeTable();
+			System.out.println("\n\nCoded Message:");
+			System.out.println(file.getEncodedMessage() +
+					   "\n\n\n");
+		    } else printNullMessage("seeing a coded message");
 		    break;
 		case "d":
-		    System.out.println("Decode Stuff");
-		    System.out.println(file.decodeMessage(s.nextLine()));
+		    if(file != null) {
+			System.out.println("Enter the encoded message:");
+			System.out.println(file.decodeMessage(s.nextLine())
+					   + "\n\n\n");
+		    } else printNullMessage("decoding a string");
 		    break;
 		case "exit":
 		    System.out.println("Exiting...");
@@ -56,6 +63,10 @@ public class Main {
 		//System.exit(1);
 	    }
 	}
+    }
+
+    private static void printNullMessage(String message) {
+	System.out.printf("Error: You must enter a message with 'e' before %s\n", message);
     }
 
     /**
