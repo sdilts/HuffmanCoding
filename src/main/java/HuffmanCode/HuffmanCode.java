@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 16:08:41 stuart>
+ * Time-stamp: <2016-01-27 19:14:02 stuart>
  * */
 
 package HuffmanCode;
@@ -13,6 +13,7 @@ public class HuffmanCode {
 
     private String message;
     private int[] freqTable;
+    private String[] codeTable;
     private Tree t;
 
     public HuffmanCode() throws Exception {
@@ -23,8 +24,15 @@ public class HuffmanCode {
     public HuffmanCode(String message) {
 	this.message = formatInput(message);
 	//System.out.println(this.message);
+	System.out.println("Building Frequency Table..");
 	buildFreqTable();
+	System.out.println("Building Huffman Tree...");
 	buildHuffmanTree();
+	System.out.println("Code Table...");
+	buildCodeTable();
+	System.out.println("Encoding message...");
+	encodeMessage();
+	System.out.println("Done");
     }
 
     private String formatInput(String input) {
@@ -32,6 +40,34 @@ public class HuffmanCode {
 	input = input.replaceAll("\\n", "\\\\");
 	input = input.replaceAll("\\s", "["); //replace problem chars
 	return input;
+    }
+
+
+    private void buildCodeTable() {
+	codeTable = new String[28];
+	StringBuilder stackie = new StringBuilder();
+	buildCodeTableHelper(t.root, stackie);
+
+    }
+
+    private void buildCodeTableHelper(Node current, StringBuilder
+				      code) {
+	//assume that the tree is built correctly:
+	if(current.isLeaf()) {
+	    if(code.length() > 0) {
+		codeTable[toIndex((char)current.data)] = code.toString();
+	    } else { //only one entry in the tree:
+		codeTable[toIndex((char)current.data)] = "0";
+	    }
+	} else { //not a leaf; continue:
+	    code.append('0');
+	    buildCodeTableHelper(current.rightChild, code);
+	    code.deleteCharAt(code.length()-1);
+	    code.append('1');
+	    buildCodeTableHelper(current.leftChild, code);
+	    code.deleteCharAt(code.length()-1);
+	}
+
     }
 
     private int toIndex(char c) {
@@ -67,13 +103,13 @@ public class HuffmanCode {
 	    Node<Character> right = q.poll();
 	    Node parent = new Node<Character>(left.key + right.key,
 					    null);
-	    parent.leftChild = right;
-	    parent.rightChild = left;
+	    parent.leftChild = left;
+	    parent.rightChild = right;
 	    q.add(parent);
 
 	}
 	t = new Tree(q.poll());
-	t.displayTree();
+	//t.displayTree();
 	
     }
 
@@ -82,6 +118,15 @@ public class HuffmanCode {
 	    System.out.println("You need to enter a message first");
 	} else {
 	    t.displayTree();
+	}
+    }
+
+    public void printCodeTable() {
+	for(int i = 0; i < codeTable.length; i++) {
+	    if(codeTable[i] != null) {
+		System.out.printf("%s  %s\n", fromIndex(i),
+				  codeTable[i]);
+	    }
 	}
     }
 }

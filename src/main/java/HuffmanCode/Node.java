@@ -13,7 +13,12 @@ class Node<E extends Comparable> implements Comparable<Comparable> {
     }
 
     public int compareTo(Comparable compare) {
+	// return ((Node) compare).key.compareTo(this.key);
 	return key.compareTo(((Node) compare).key);
+    }
+
+    public boolean isLeaf() {
+	return leftChild == null && rightChild == null;
     }
 
     //    public 

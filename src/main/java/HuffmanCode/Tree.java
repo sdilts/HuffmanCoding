@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class Tree<T extends Comparable> {
     
-    private Node<T> root;
+    public Node<T> root;
 
     public Tree(Node root) {
 	this.root = root;
