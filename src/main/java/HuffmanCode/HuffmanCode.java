@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 23:04:48 stuart>
+ * Time-stamp: <2016-01-28 15:39:35 stuart>
  * */
 
 package HuffmanCode;
@@ -27,6 +27,7 @@ public class HuffmanCode {
 	System.out.println("Encoding: " + this.message);
 	System.out.println("Building Frequency Table...");
 	buildFreqTable();
+	printFreqTable();
 	System.out.println("Building Huffman Tree...");
 	buildHuffmanTree();
 	System.out.println("Building Code Table...");
@@ -61,10 +62,13 @@ public class HuffmanCode {
 	    } else if(message.charAt(i) == '1') {
 		cur = cur.leftChild;
 	    } else {
-		System.out.println("Text must be either a 1 or a zero");
-		System.exit(1);
+		System.out.println("Error: Text must be either a 1 or a zero");
+		System.exit(1);  //easier to exit than handle exception or null case
 	    }
-	    if(cur.isLeaf()) {
+	    if(cur == null) { //special case of there only being one item code
+		System.out.println("Error: An invalid code was entered");
+		System.exit(1);
+	    } else if(cur.isLeaf()) {
 		//System.out.println((char) cur.data);
 		code.append((char)cur.data);
 		//i--;
@@ -74,7 +78,7 @@ public class HuffmanCode {
 	if(!cur.equals(t.root)) { //work on the logic here: what will happen
 	                          // if input is invalid?
 	    System.out.println("Error: could not read the last digits of the code.");
-	    System.exit(1);
+	    System.exit(1); //easier to exit than handle exception or null case
 	}
 	return code.toString();
     }
@@ -160,6 +164,33 @@ public class HuffmanCode {
 				  codeTable[i]);
 	    }
 	}
+    }
+
+    public void printFreqTable() {
+	//assumes fixed-width font:
+	System.out.println(" Frequency Table:");
+	System.out.println("+----------------+");
+	for(int i = 0; i < freqTable.length; i++) {
+	    //detemrine the lenght of the number held in the data:
+	    int length = getDigits(freqTable[i]);
+	    for(int j = 0; j < length; j++) {
+		System.out.print(" ");
+	    }
+	    System.out.print(" " + fromIndex(i));
+	}
+	System.out.print("\n");
+	for(int i = 0; i < freqTable.length; i++) {
+	    System.out.printf("  %s", freqTable[i]);
+	}
+	System.out.print("\n\n");
+
+    }
+
+    private int getDigits(int number) {
+	if(number == 0) {
+	    return 1;
+	} else return  1 + (int)Math.floor(Math.log10(number));
+
     }
 
     private int toIndex(char c) {
