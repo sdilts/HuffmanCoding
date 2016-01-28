@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 20:15:34 stuart>
+ * Time-stamp: <2016-01-27 21:22:08 stuart>
  * */
 
 package HuffmanCode;
@@ -40,6 +40,7 @@ public class Main {
 		    break;
 		case "d":
 		    System.out.println("Decode Stuff");
+		    System.out.println(file.decodeMessage(s.nextLine()));
 		    break;
 		case "exit":
 		    System.out.println("Exiting...");
@@ -51,7 +52,7 @@ public class Main {
 		}
 	    }  catch(java.lang.ArrayIndexOutOfBoundsException e) {
 		System.out.println("Error: please only insert characters a-Z, as well as space and newline.");
-		e.printStackTrace();
+		//e.printStackTrace();
 		//System.exit(1);
 	    }
 	}

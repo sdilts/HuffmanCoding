@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 20:19:29 stuart>
+ * Time-stamp: <2016-01-27 22:15:12 stuart>
  * */
 
 package HuffmanCode;
@@ -57,6 +57,36 @@ public class HuffmanCode {
 	buildCodeTableHelper(t.root, stackie);
 
     }
+
+    public String decodeMessage(String message) {
+	StringBuilder code = new StringBuilder();
+	Node cur = t.root;
+	for(int i = 0; i < message.length(); i++) {
+	    System.out.println(cur.getValue());
+	    if(message.charAt(i) == '0') {
+		cur = cur.rightChild;
+	    } else if(message.charAt(i) == '1') {
+		cur = cur.leftChild;
+	    } else {
+		System.out.println("Text must be either a 1 or a zero");
+		System.exit(1);
+	    }
+	    if(cur.isLeaf()) {
+		System.out.println((char) cur.data);
+		code.append((char)cur.data);
+		//i--;
+		cur = t.root;
+	    }
+	}
+	if(!cur.equals(t.root)) { //work on the logic here: what will happen
+	                          // if input is invalid?
+	    System.out.println("Error: could not read the last digits of the code.");
+	    System.exit(1);
+	}
+	return code.toString();
+    }
+
+
 
     private void buildCodeTableHelper(Node current, StringBuilder
 				      code) {
