@@ -3,11 +3,12 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-28 15:39:35 stuart>
+ * Time-stamp: <2016-01-31 14:20:21 stuart>
  * */
 
 package HuffmanCode;
 import java.util.PriorityQueue;
+import java.util.BitSet;
 
 public class HuffmanCode {
 
@@ -16,11 +17,6 @@ public class HuffmanCode {
     private int[] freqTable;
     private String[] codeTable;
     private Tree t;
-
-    public HuffmanCode() throws Exception {
-	System.out.println("This behavior is undefined with this constructor");
-	System.exit(1);
-    }
 
     public HuffmanCode(String message) {
 	this.message = formatInput(message);
@@ -34,6 +30,7 @@ public class HuffmanCode {
 	buildCodeTable();
 	System.out.println("Encoding message...");
 	encodeMessage();
+	encodeBitMessage();
 	System.out.println("Done");
     }
 
@@ -50,6 +47,32 @@ public class HuffmanCode {
 	    code.append(codeTable[toIndex(message.charAt(i))]);
 	}
 	encodedMessage = code.toString();
+    }
+
+    private void encodeBitMessage() {
+	BitSet code = new BitSet();
+	int bitIndex = 0;
+	for(int i = 0; i < message.length(); i++) {
+	    //get the character encoding we need:
+	    int curChar = toIndex(message.charAt(i));
+	    //run over every char in the encoding string and set the appropriate bits:
+	    for(int j = 0; j < codeTable[curChar].length(); j++) {
+		if(codeTable[curChar].charAt(j) == '1') {
+		    code.set(bitIndex);
+		} else {
+		    code.clear(bitIndex);
+		}
+		bitIndex++;
+	    }
+	} 
+	//byte[] bitMessage = code.toByteArray();
+	for(int i = 0; i < bitIndex; i++) {
+	    boolean data = code.get(i);
+	    if(data) {
+		System.out.print('1');
+	    } else System.out.print(0);
+	}
+	System.out.print('\n');
     }
 
     public String decodeMessage(String message) {
@@ -144,7 +167,6 @@ public class HuffmanCode {
 
 	    }
 	    t = new Tree(q.poll());
-	    //t.displayTree();
 	}
 	
     }
