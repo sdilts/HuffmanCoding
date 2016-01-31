@@ -1,4 +1,4 @@
-# Compiled source #
+ Compiled source #
 ###################
 *.com
 *.class
@@ -16,5 +16,6 @@
 # Direct files and directories #
 ################################
 .gradle
+*.zip
 build/
 .nb-gradle
