@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-31 14:20:21 stuart>
+ * Time-stamp: <2016-02-03 15:21:01 stuart>
  * */
 
 package HuffmanCode;
@@ -30,10 +30,17 @@ public class HuffmanCode {
 	buildCodeTable();
 	System.out.println("Encoding message...");
 	encodeMessage();
-	encodeBitMessage();
+	//encodeBitMessage();
 	System.out.println("Done");
     }
 
+    
+    /**
+     * Convertss message into the correct, all uppercase format with "]" for
+     * spaces and "/" for newlines:
+     * @param input Message to be converted
+     * @return converted message
+     */
     private String formatInput(String input) {
 	input = input.toUpperCase();
 	input = input.replaceAll("\\n", "\\\\");
@@ -41,6 +48,8 @@ public class HuffmanCode {
 	return input;
     }
 
+    /** Creates the encoded message using the current code table. Will throw a null
+     * pointer exception if the code table is not initialized.  */
     private void encodeMessage() {
 	StringBuilder code = new StringBuilder();
 	for(int i = 0; i < message.length(); i++) {
@@ -49,6 +58,8 @@ public class HuffmanCode {
 	encodedMessage = code.toString();
     }
 
+    /** Encodes the message in the same way as encodeMessage(), but stores the
+     * message in a byte array instead of a string. */
     private void encodeBitMessage() {
 	BitSet code = new BitSet();
 	int bitIndex = 0;
@@ -75,6 +86,11 @@ public class HuffmanCode {
 	System.out.print('\n');
     }
 
+    /**
+     * Decodes the given message string and returns the result.
+     * @param message String to be converted
+     * @return decoded message
+     */
     public String decodeMessage(String message) {
 	StringBuilder code = new StringBuilder();
 	Node cur = t.root;
@@ -106,6 +122,8 @@ public class HuffmanCode {
 	return code.toString();
     }
 
+    /** Outside method for building the code table from the Huffman tree. The
+     * code table is saved to the global variable <i>codeTable</i> */
     private void buildCodeTable() {
 	codeTable = new String[28];
 	StringBuilder stackie = new StringBuilder();
@@ -113,6 +131,14 @@ public class HuffmanCode {
     }
 
 
+    /**
+     * Recursive function for building the code table from the Huffman
+     * tree. Uses a StringBuilder object as a stack in order to record the
+     * recursive steps through the tree.
+     * @param current the current node that the method is analyzing. Should
+     * start as the root of the tree.
+     * @param code the current path through the tree. Is also the current coding string.
+     */
     private void buildCodeTableHelper(Node current, StringBuilder
 				      code) {
 	//account for special case where only one char is represented:
@@ -135,6 +161,7 @@ public class HuffmanCode {
 
     }
 
+    /** Counts the frequency of the characers in the messages string. */
     private void buildFreqTable() {
 	freqTable = new int[28];
 	for(int i = 0; i < message.length(); i++) {
@@ -143,6 +170,7 @@ public class HuffmanCode {
 	}
     }
 
+    /** Builds the Huffman tree from the frequency table. */
     private void buildHuffmanTree() {
 	PriorityQueue<Node> q = new PriorityQueue<Node>();
 	for(int i = 0; i < freqTable.length; i++) {
@@ -166,10 +194,21 @@ public class HuffmanCode {
 		q.add(parent);
 
 	    }
-	    t = new Tree(q.poll());
+	    t = new Tree<Character>(q.poll());
 	}
 	
     }
+
+    // private void rebuildTree(String[] codes) {
+    // 	Node root = new Node<Character>(null, null);
+    // 	for(int i = 0; i < codes.length; i++) {
+    // 	    for(int j = 0; j < codes[i].length(); j++) {
+    // 		//determine if you ne
+
+    // 	    }
+    // 	}
+
+    // }
 
     public void displayTree() {
 	if(t == null) {
@@ -193,7 +232,7 @@ public class HuffmanCode {
 	System.out.println(" Frequency Table:");
 	System.out.println("+----------------+");
 	for(int i = 0; i < freqTable.length; i++) {
-	    //detemrine the lenght of the number held in the data:
+	    //detemrine the length of the number held in the data:
 	    int length = getDigits(freqTable[i]);
 	    for(int j = 0; j < length; j++) {
 		System.out.print(" ");
