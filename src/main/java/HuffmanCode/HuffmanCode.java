@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-02-03 15:21:01 stuart>
+ * Time-stamp: <2016-02-04 20:39:04 stuart>
  * */
 
 package HuffmanCode;
@@ -140,7 +140,9 @@ public class HuffmanCode {
      * @param code the current path through the tree. Is also the current coding string.
      */
     private void buildCodeTableHelper(Node current, StringBuilder
-				      code) {
+				      code) { // use local variables
+					      // intstead of treating
+					      // this thing like a stack?
 	//account for special case where only one char is represented:
 	if(current != null) {
 	    if(current.isLeaf()) {
