@@ -3,7 +3,7 @@
  * as well as the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-01-27 22:59:16 stuart>
+ * Time-stamp: <2016-02-08 15:59:08 stuart>
  * */
 
 package HuffmanCode;
@@ -32,7 +32,7 @@ public class Main {
 		    if(file != null) {
 			file.displayTree();
 			System.out.println("\n\n\n");
-		    } else printNullMessage("veiwing the tree");
+		    } else printNullMessage("viewing the tree");
 		    break;
 		case "c":
 		    if(file != null) {
@@ -70,10 +70,10 @@ public class Main {
     }
 
     /**
-     * Recieves the next input from System.in that ends with the
+     * Receives the next input from System.in that ends with the
      * pattern matched by the given regular expression.
      *
-     * @param regex regluar expression that matches the end of input.
+     * @param regex regular expression that matches the end of input.
      */
     private static String enterMessage(String regex) {
 	Scanner s = new Scanner(System.in).useDelimiter(regex);

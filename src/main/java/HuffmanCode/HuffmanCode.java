@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-02-04 20:39:04 stuart>
+ * Time-stamp: <2016-02-08 15:59:03 stuart>
  * */
 
 package HuffmanCode;
@@ -36,7 +36,7 @@ public class HuffmanCode {
 
     
     /**
-     * Convertss message into the correct, all uppercase format with "]" for
+     * Converts message into the correct, all uppercase format with "]" for
      * spaces and "/" for newlines:
      * @param input Message to be converted
      * @return converted message
@@ -126,23 +126,19 @@ public class HuffmanCode {
      * code table is saved to the global variable <i>codeTable</i> */
     private void buildCodeTable() {
 	codeTable = new String[28];
-	StringBuilder stackie = new StringBuilder();
-	buildCodeTableHelper(t.root, stackie);
+	buildCodeTableHelper(t.root, "");
     }
 
 
     /**
      * Recursive function for building the code table from the Huffman
-     * tree. Uses a StringBuilder object as a stack in order to record the
-     * recursive steps through the tree.
-     * @param current the current node that the method is analyzing. Should
-     * start as the root of the tree.
-     * @param code the current path through the tree. Is also the current coding string.
+     * tree. Uses a StringBuilder object as a stack in order to record
+     * the recursive steps through the tree.
+     * @param current the current node that the method is
+     *          analyzing. Should start as the root of the tree.
+     * @param code String used to store the current code
      */
-    private void buildCodeTableHelper(Node current, StringBuilder
-				      code) { // use local variables
-					      // intstead of treating
-					      // this thing like a stack?
+    private void buildCodeTableHelper(Node current, String code) {
 	//account for special case where only one char is represented:
 	if(current != null) {
 	    if(current.isLeaf()) {
@@ -152,18 +148,16 @@ public class HuffmanCode {
 		    codeTable[toIndex((char)current.data)] = "0";
 		}
 	    } else { //not a leaf; continue:
-		code.append('0');
-		buildCodeTableHelper(current.rightChild, code);
+		buildCodeTableHelper(current.rightChild, code + "0");
 		code.deleteCharAt(code.length()-1);
-		code.append('1');
-		buildCodeTableHelper(current.leftChild, code);
+		buildCodeTableHelper(current.leftChild, code + "1");
 		code.deleteCharAt(code.length()-1);
 	    }
 	}
 
     }
 
-    /** Counts the frequency of the characers in the messages string. */
+    /** Counts the frequency of the characters in the messages string. */
     private void buildFreqTable() {
 	freqTable = new int[28];
 	for(int i = 0; i < message.length(); i++) {
@@ -234,7 +228,7 @@ public class HuffmanCode {
 	System.out.println(" Frequency Table:");
 	System.out.println("+----------------+");
 	for(int i = 0; i < freqTable.length; i++) {
-	    //detemrine the length of the number held in the data:
+	    //determine the length of the number held in the data:
 	    int length = getDigits(freqTable[i]);
 	    for(int j = 0; j < length; j++) {
 		System.out.print(" ");
