@@ -3,7 +3,7 @@
  * the control flow of the program.
  *
  * @author Stuart Dilts
- * Time-stamp: <2016-02-08 15:59:03 stuart>
+ * Time-stamp: <2016-02-16 23:09:43 stuart>
  * */
 
 package HuffmanCode;
@@ -149,9 +149,9 @@ public class HuffmanCode {
 		}
 	    } else { //not a leaf; continue:
 		buildCodeTableHelper(current.rightChild, code + "0");
-		code.deleteCharAt(code.length()-1);
+		//code.deleteCharAt(code.length()-1);
 		buildCodeTableHelper(current.leftChild, code + "1");
-		code.deleteCharAt(code.length()-1);
+		//code.deleteCharAt(code.length()-1);
 	    }
 	}
 
@@ -192,17 +192,23 @@ public class HuffmanCode {
 	    }
 	    t = new Tree<Character>(q.poll());
 	}
-	
     }
 
-    // private void rebuildTree(String[] codes) {
-    // 	Node root = new Node<Character>(null, null);
-    // 	for(int i = 0; i < codes.length; i++) {
-    // 	    for(int j = 0; j < codes[i].length(); j++) {
-    // 		//determine if you ne
+    // private int[] toCanonical(String[] messageTable) {
+    // 	java.util.Collections.sort(messageTable, new
+    // 				   LengthComparator());
+    // 	int lastCodeLength = messageTable[0].length();
+    // 	int[] newTable = new int[messageTable.length];
+
+    // 	for(int i = 0; i < messageTable.length; i++) {
+    // 	    int can = 0; //don't want to spell cannonical
+
+    // 	    for(int j = 0; j < messageTable[i].length(); j++) {
+		
 
     // 	    }
     // 	}
+	    
 
     // }
 
@@ -240,7 +246,6 @@ public class HuffmanCode {
 	    System.out.printf("  %s", freqTable[i]);
 	}
 	System.out.print("\n\n");
-
     }
 
     private int getDigits(int number) {
