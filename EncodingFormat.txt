@@ -1,0 +1,13 @@
+This program compresses text encoded in ASCII format. The EOT code
+cannot be used in the file, as it marks the end of encoding.
+
+The compressed binary file created by this program can be decoded with
+the following observations:
++ The first byte of the file specifies how many characters, n, are encoded
+  into the file.
++ The next n bytes are the ASCII codes of the characters within the
+  file. 
++ The next n bytes are the length of each code in the same order as
+  the block of byes obtained in the previous step.
++ The rest of the file is the actual contents of the file. The codes
+  stop once the EOT char is reached (ASCII code 4).

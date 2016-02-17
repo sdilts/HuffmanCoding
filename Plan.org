@@ -1,0 +1,52 @@
+#+Title: Plan of Attack
+* Purpose
+  This document helps to outline the changes needed to the Huffman
+  Coding application as specified by the homework assignment into a
+  more widely usable program that can save compressed messages to disk.
+** Homework Specifications:
+   + Only need to encode chars A through Z, plus spaces and
+     newlines. All lowercase letters are converted to uppercase
+   + No bit manipulation is required. Use Strings to store all binary
+     data as explicit 1's and 0's
+   + No writing to files is required.
+** New Specifications:
+   + Encode all ASCII codes 0-127.
+   + Save compressed message to disk
+   + Read and decode messages that were written to disk by this
+     program.
+*** Desired Features:
+    + Read in all data from file
+    + Output final results to file
+* Algorithm Steps
+  New steps are denoted in *bold* //
+  Removed steps are +struck through+ //
+** Encoding
+   After receiving the message string as a constructor argument:
+   1. +Sanitize input+
+   1. [@1] Build the frequency table
+   2. Build the Huffman Tree
+   3. Build the code Table
+   4. *Convert code table to canonical form*
+   5. Encode Message
+** Decoding:
+   These steps are based off of the specifications found in
+   [[./EncodingFormat.txt]]. Check this file first, as it may be more
+   up-to-date with the actual actions of the program.
+   1. *Re-create the coding table from the first items in the file*
+   2. *Rebuild the Huffman tree using the coding table*
+   3. Decode the message with the Huffman tree.
+* Homework Specs data types and usage:
+  This section explains the variables used in intermediate steps.
+** Huffman Code Portion:
+   + Uses strings for the message (duh)
+   + Freqency table:
+     - int array, with location in array denoting character value
+   + Huffman tree:
+     - Nodes store datatypes as chars
+   + codeTable:
+     - String array, with location in array denoting character value
+   + encodedMesssage:
+     - Stored as a string
+* File Changes
+  This portion contains observations on what may need to be re-written
+  and what may be directly ported over from the old specifications
